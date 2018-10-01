@@ -1,7 +1,7 @@
 puts "День рождения"
 day = gets.chomp.to_i
 puts "Месяц рождения"
-month = gets.chomp.to_i
+month = gets.chomp.to_sym
 puts "Год рождения"
 year = gets.chomp.to_i
 
@@ -35,9 +35,11 @@ ordinary_year = {
   december: 31
 }
 
-if year % 100 == 0
+if year % 400 == 0
+	leap_year.
+elsif year % 100 == 0
 	puts "ordinary year"
-elsif year % 400 == 0 || year % 4 == 0
+elsif year % 4 == 0
 	puts "leap year"
 else
 	puts "ordinary year"

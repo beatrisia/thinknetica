@@ -1,14 +1,28 @@
-fibonacci = [0, 1]
+fibonacci = [0]
+element = 1
 
-loop do
-element = fibonacci[-1] + fibonacci[-2]
-fibonacci.push(element)
-break if element >= 100
+while element < 100 do
+  fibonacci.push(element)
+  element = fibonacci[-1] + fibonacci[-2]
 end
 
 puts fibonacci
 
 =begin
+
+fibonacci = [0, 1]
+
+loop do
+  element = fibonacci[-1] + fibonacci[-2]
+  break if element >= 100
+  fibonacci.push(element)
+end
+
+puts fibonacci
+
+---
+
+puts fibonacci
 
 fibonacci = []
 

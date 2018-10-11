@@ -12,7 +12,7 @@ loop do
   puts "Введите количество товара"
   quantity = gets.to_f
 
-  products[name] = {:price => price, :quantity => quantity}
+  products[name] = {price: price, quantity: quantity}
 end
 
 puts products

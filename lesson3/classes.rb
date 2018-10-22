@@ -1,86 +1,95 @@
 class Station
-  attr_accessor :trains
+  attr_reader :trains
 
   def initialize(name)
     @name = name
     @trains = []
   end
 
-  def add_train(train)
+  def arrive(train)
     @trains << train
   end
 
-  def delete_train(train)
+  def depart(train)
     @trains.delete(train)
+  end
+
+  def cargo
+    @trains.count { |train| train.type == "cargo" }
+  end
+
+  def passenger
+    @trains.count { |train| train.type == "passenger" }
+  end
 end
 
 class Route
   def initialize(departure_station, arrival_station)
-    @departure_station = departure_station
-    @arrival_station = arrival_station
-    @way_stations = []
+    @stations = [departure_station, arrival_station]
   end
 
-  def add_way_station(way_station)
-    @way_stations << way_station
+  def stations
   end
 
-  def full_route
-    @full_route = [@departure_station, @way_stations, @arrival_station].flatten
+  def add(station)
+    @stations << station
   end
 
-  def delete_way_station(way_station)
-    @way_stations.delete(way_station)
+  def delete(station)
+    @stations.delete(station)
   end
 
-  def show_stations
-    puts @departure_station
-    puts @way_stations if @way_stations.any?
-    puts @arrival_station
+  def show
+    @stations.each { |station| puts station }
   end
 end
 
 class Train
-  attr_accessor :speed
-  attr_reader :carriages_quantity
+  attr_accessor :speed, :type
+  attr_reader :carriages
 
-  def initialize(number, type, carriages_quantity)
+  def initialize(number, type, carriages)
     @number = number
     @type = type
-    @carriages_quantity = carriages_quantity
+    @carriages = carriages
   end
 
   def increase_speed(speed)
-    @speed = speed
+    @speed += speed
   end
 
-  def reduce_speed
-    @speed = 0
+  def decrease_speed(speed)
+    @speed -= speed if speed > 0
   end
 
   def add_carriages
-    @carriages_quantity += 1 if @speed == 0
+    @carriages += 1 if @speed == 0
   end
 
   def delete_carriages
-    @carriages_quantity -= 1 if @speed == 0
+    @carriages -= 1 if @speed == 0 && @carriages > 0
   end
 
   def route(route)
-    @route = route
-  end
-
-  def departure
-    @departure_station = @route[0]
+    @route = route.stations
+    @departure_station = @route.first
   end
 
   def move(station)
     @station = station
   end
 
-  def stations
-    @current_station = @station
-    @previous_station
-    @next_station
+  def current_station
+    @station
+  end
+
+  def previous_station
+    index = route.index(@station)
+    @previous_station = route[index-1] if index > 0
+  end
+
+  def next_station
+    index = route.index(@station)
+    @next_station = route[index+1]
   end
 end

@@ -14,29 +14,24 @@ class Station
     @trains.delete(train)
   end
 
-  def cargo
-    @trains.count { |train| train.type == "cargo" }
-  end
-
-  def passenger
-    @trains.count { |train| train.type == "passenger" }
+  def trains_type(type)
+    @trains.count { |train| train.type == type }
   end
 end
 
 class Route
+  attr_reader :stations
+
   def initialize(departure_station, arrival_station)
     @stations = [departure_station, arrival_station]
   end
 
-  def stations
-  end
-
   def add(station)
-    @stations << station
+    @stations.insert(-2, station)
   end
 
   def delete(station)
-    @stations.delete(station)
+    @stations.delete(station) if station != @stations[0] && station != @stations[-1]
   end
 
   def show
@@ -45,13 +40,13 @@ class Route
 end
 
 class Train
-  attr_accessor :speed, :type
-  attr_reader :carriages
+  attr_reader :carriages, :speed, :type
 
   def initialize(number, type, carriages)
     @number = number
     @type = type
     @carriages = carriages
+    @speed = 0
   end
 
   def increase_speed(speed)
@@ -59,7 +54,7 @@ class Train
   end
 
   def decrease_speed(speed)
-    @speed -= speed if speed > 0
+    @speed -= speed if @speed > 0 && @speed >= speed
   end
 
   def add_carriages
@@ -67,29 +62,32 @@ class Train
   end
 
   def delete_carriages
-    @carriages -= 1 if @speed == 0 && @carriages > 0
+    @carriages -= 1 if @speed == 0 && @carriages >= 1
   end
 
   def route(route)
-    @route = route.stations
-    @departure_station = @route.first
+    @route = route
+    @station = 0
+    @route.stations[@station].arrive(self)
   end
 
-  def move(station)
-    @station = station
+  def forward
+    @station += 1
+  end
+
+  def backward
+    @station -= 1 if @station >= 1
   end
 
   def current_station
-    @station
+    @route[@station]
   end
 
   def previous_station
-    index = route.index(@station)
-    @previous_station = route[index-1] if index > 0
+    @route[@station-1] if @station >= 1
   end
 
   def next_station
-    index = route.index(@station)
-    @next_station = route[index+1]
+    @route[@station+1] if @station != @route.last
   end
 end

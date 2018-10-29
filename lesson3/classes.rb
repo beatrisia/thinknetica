@@ -72,22 +72,24 @@ class Train
   end
 
   def forward
-    @station += 1
+    @station += 1 if @route.stations[@station] != @route.stations[-1]
+    @route.stations[@station].arrive(self)
   end
 
   def backward
     @station -= 1 if @station >= 1
+    @route.stations[@station].arrive(self)
   end
 
   def current_station
-    @route[@station]
+    @route.stations[@station]
   end
 
   def previous_station
-    @route[@station-1] if @station >= 1
+    @route.stations[@station-1] if @station >= 1
   end
 
   def next_station
-    @route[@station+1] if @station != @route.last
+    @route.stations[@station+1] if @route.stations[@station] != @route.stations[-1]
   end
 end

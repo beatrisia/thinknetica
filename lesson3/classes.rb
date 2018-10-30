@@ -31,11 +31,19 @@ class Route
   end
 
   def delete(station)
-    @stations.delete(station) if station != @stations[0] && station != @stations[-1]
+    @stations.delete(station) if station != first_station && station != last_station
   end
 
   def show
     @stations.each { |station| puts station }
+  end
+
+  def first_station
+    @stations[0]
+  end
+
+  def last_station
+    @stations[-1]
   end
 end
 
@@ -68,7 +76,7 @@ class Train
   def route(route)
     @route = route
     @station = 0
-    @route.stations[@station].arrive(self)
+    current_station.arrive(self)
   end
 
   def forward
@@ -92,10 +100,10 @@ class Train
   end
 
   def previous_station
-    @route.stations[@station - 1] if @station >= 1
+    @route.stations[@station - 1] if current_station != @route.first_station
   end
 
   def next_station
-    @route.stations[@station + 1] if @route.stations[@station] != @route.stations[-1]
+    @route.stations[@station + 1] if current_station != @route.last_station
   end
 end

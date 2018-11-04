@@ -20,7 +20,7 @@ class Train
   end
 
   def delete_car(car)
-    @cars.delete(car) if @speed == 0 && self.include?(car)
+    @cars.delete(car) if @speed == 0 && include?(car)
   end
 
   def route(route)

@@ -1,12 +1,8 @@
 require_relative 'car'
 
-class PassengerCar
+class PassengerCar < Car
 
-  def initialize
-    @type = "passenger"
-  end
-
-  def passenger_car
-    @type
+  def initialize(number, type = "passenger")
+    super
   end
 end

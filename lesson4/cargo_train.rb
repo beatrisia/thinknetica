@@ -7,11 +7,6 @@ class CargoTrain < Train
   end
 
   def add_car(car)
-    super && car.cargo_car
+    super && car.type = "cargo"
   end
-
-  def delete_car(car)
-    super && car.cargo_car
-  end
-
 end

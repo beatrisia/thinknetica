@@ -7,11 +7,6 @@ class PassengerTrain < Train
   end
 
   def add_car(car)
-    super && car.passenger_car
+    super && car.type == "passenger"
   end
-
-  def delete_car(car)
-    super && car.passenger_car
-  end
-
 end

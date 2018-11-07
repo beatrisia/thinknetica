@@ -1,9 +1,8 @@
 class Train
   attr_reader :cars, :speed, :type, :number
 
-  def initialize(number, type)
+  def initialize(number)
     @number = number
-    @type = type
     @cars = []
   end
 
@@ -20,7 +19,7 @@ class Train
   end
 
   def delete_car(car)
-    @cars.delete(car) if @speed == 0 && train.cars.include?(car)
+    @cars.delete(car) if @speed == 0
   end
 
   def route(route)

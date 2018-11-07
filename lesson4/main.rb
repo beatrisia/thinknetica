@@ -10,40 +10,40 @@ require_relative 'cargo_car'
 class Main
 
 def initialize()
-  stations = []
-  trains = []
-  routes = []
-  cars = []
+  @stations = []
+  @trains = []
+  @routes = []
+  @cars = []
 end
 
 def run
-action = 0
-while action != "exit" do
+@action = 0
+while @action != "exit" do
 puts "What would you like to do?"
-action = gets.chomp
-  if action == "Create a station"
+@action = gets.chomp
+  if @action == "Create a station"
     create_station
-  elsif action == "Create a train"
+  elsif @action == "Create a train"
     create_train
-  elsif action == "Create a route"
+  elsif @action == "Create a route"
     create_route
-  elsif action == "Create a car"
+  elsif @action == "Create a car"
     create_car
-  elsif action == "Attach a route to a train"
+  elsif @action == "Attach a route to a train"
     attach_route
-  elsif action == "Add a car to a train"
+  elsif @action == "Add a car to a train"
     add_car
-  elsif action == "Delete a car from a train"
+  elsif @action == "Delete a car from a train"
     delete_car
-  elsif action == "Move forward"
+  elsif @action == "Move forward"
     move_forward
-  elsif action == "Move backward"
+  elsif @action == "Move backward"
     move_backward
-  elsif action == "View the stations"
+  elsif @action == "View the stations"
     view_stations
-  elsif action == "View the trains"
+  elsif @action == "View the trains"
     view_trains
-  elsif action == "exit"
+  elsif @action == "exit"
     exit
   end
 end
@@ -57,7 +57,7 @@ def create_station
   puts "Enter station's name:"
   stations_name = gets.chomp
   station = Station.new(stations_name)
-  stations << station
+  @stations << station
   puts "The station created"
 end
 
@@ -70,10 +70,10 @@ def create_train
   type = gets.chomp
   if type == "passenger"
     train = PassengerTrain.new(number)
-    trains << train
+    @trains << train
   elsif type == "cargo"
     train = CargoTrain.new(number)
-    trains << train
+    @trains << train
   end
   puts "The train created"
 end
@@ -90,7 +90,7 @@ def create_route
   ar_station_name = gets.chomp
   arrival_station = stations.find { |station| station.name == arr_station_name }
   route = Route.new(number, departure_station, arrival_station)
-  routes << route
+  @routes << route
   puts "The route created."
 end
 
@@ -103,10 +103,10 @@ def create_car
   type = gets.chomp
   if type == "passenger"
     car = PassengerCar.new(number)
-    cars << car
+    @cars << car
   elsif type == "cargo"
     car = CargoCar.new(number)
-    cars << car
+    @cars << car
   end
   puts "The car has been created"
 end
@@ -163,7 +163,6 @@ def view_trains
 end
 
 def exit
-  action == "exit"
   puts "Good bye!"
 end
 

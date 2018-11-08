@@ -8,6 +8,6 @@ class PassengerTrain < Train
   end
 
   def add_car(car)
-    super && car.type == "passenger"
+    @cars << car if @speed == 0 && car.type == "passenger"
   end
 end

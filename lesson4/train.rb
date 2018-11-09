@@ -25,7 +25,7 @@ class Train
   def route(route)
     @route = route
     @station = 0
-    current_station.arrive(self)
+    # current_station.arrive(self)
   end
 
   def forward

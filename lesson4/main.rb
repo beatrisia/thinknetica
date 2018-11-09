@@ -18,8 +18,21 @@ end
 
 def run
   @action = 0
-  while @action != "Exit" do
-    puts "What would you like to do?"
+  while @action != 12 do
+    puts "Menu"
+    puts "What would you like to do? Enter the number:"
+    puts "1 Create a station"
+    puts "2 Create a train"
+    puts "3 Create a route"
+    puts "4 Create a car"
+    puts "5 Attach a route to the train"
+    puts "6 Add a car to the train"
+    puts "7 Delete a car from the train"
+    puts "8 Move forward"
+    puts "9 Move backward"
+    puts "10 View the stations"
+    puts "11 View the trains"
+    puts "12 Exit"
     @action = gets.chomp
     actions
   end
@@ -28,29 +41,29 @@ end
 private
 
 def actions
-  if @action == "Create a station"
+  if @action == 1
     create_station
-  elsif @action == "Create a train"
+  elsif @action == 2
     create_train
-  elsif @action == "Create a route"
+  elsif @action == 3
     create_route
-  elsif @action == "Create a car"
+  elsif @action == 4
     create_car
-  elsif @action == "Attach a route to the train"
+  elsif @action == 5
     attach_route
-  elsif @action == "Add a car to the train"
+  elsif @action == 6
     add_car
-  elsif @action == "Delete a car from the train"
+  elsif @action == 7
     delete_car
-  elsif @action == "Move forward"
+  elsif @action == 8
     move_forward
-  elsif @action == "Move backward"
+  elsif @action == 9
     move_backward
-  elsif @action == "View the stations"
+  elsif @action == 10
     view_stations
-  elsif @action == "View the trains"
+  elsif @action == 11
     view_trains
-  elsif @action == "Exit"
+  elsif @action == 12
     exit
   end
 end
@@ -90,10 +103,10 @@ def create_route
   puts "Enter departure station name:"
   dep_station_name = gets.chomp
   departure_station = @stations.find { |station| station.name == dep_station_name }
-  puts "Enter arrival_station name:"
+  puts "Enter arrival station name:"
   ar_station_name = gets.chomp
   arrival_station = @stations.find { |station| station.name == ar_station_name }
-  @route = Route.new(route_number, departure_station, arrival_station)
+  route = Route.new(route_number, departure_station, arrival_station)
   @routes << route
   puts "The route has been created."
 end

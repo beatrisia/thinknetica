@@ -33,8 +33,7 @@ def run
     puts "10 View the stations"
     puts "11 View the trains"
     puts "12 Exit"
-    @action = gets.chomp
-    actions
+    @action = gets.to_i
   end
 end
 

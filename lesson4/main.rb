@@ -69,8 +69,6 @@ def actions
 end
 
 def create_station
-  puts "Enter the station:"
-  station = gets.chomp
   puts "Enter station name:"
   station_name = gets.chomp
   station = Station.new(station_name)
@@ -79,8 +77,6 @@ def create_station
 end
 
 def create_train
-  puts "Enter train name:"
-  train = gets.chomp
   puts "Enter train number:"
   train_number = gets.chomp
   puts "Enter train type:"
@@ -96,8 +92,6 @@ def create_train
 end
 
 def create_route
-  puts "Enter route name:"
-  route = gets.chomp
   puts "Enter route number:"
   route_number = gets.chomp
   puts "Enter departure station name:"
@@ -112,8 +106,6 @@ def create_route
 end
 
 def create_car
-  puts "Enter car name:"
-  car = gets.chomp
   puts "Enter car number"
   car_number = gets.chomp
   puts "Enter car type:"

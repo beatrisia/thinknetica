@@ -18,7 +18,7 @@ end
 
 def run
   @action = 0
-  while @action != 12 do
+  while @action < 12 do
     puts "Menu"
     puts "What would you like to do? Enter the number:"
     puts "1 Create a station"
@@ -34,6 +34,7 @@ def run
     puts "11 View the trains"
     puts "12 Exit"
     @action = gets.to_i
+    actions
   end
 end
 

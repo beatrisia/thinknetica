@@ -4,6 +4,7 @@ class Train
   def initialize(number)
     @number = number
     @cars = []
+    @speed = 0
   end
 
   def increase_speed(speed)
@@ -25,7 +26,7 @@ class Train
   def route(route)
     @route = route
     @station = 0
-    # current_station.arrive(self)
+    current_station.arrive(self)
   end
 
   def forward

@@ -87,6 +87,8 @@ private
     elsif type == "cargo"
       train = CargoTrain.new(train_number)
       @trains << train
+    else
+      puts "Enter passenger or cargo type."
     end
     puts "The train has been created."
   end
@@ -97,12 +99,20 @@ private
     puts "Enter departure station:"
     dep_station = gets.chomp
     departure_station = @stations.find { |station| station.name == dep_station }
-    puts "Enter arrival station:"
-    ar_station = gets.chomp
-    arrival_station = @stations.find { |station| station.name == ar_station }
-    route = Route.new(route_number, departure_station, arrival_station)
-    @routes << route
-    puts "The route has been created."
+    if departure_station != nil
+      puts "Enter arrival station:"
+      ar_station = gets.chomp
+      arrival_station = @stations.find { |station| station.name == ar_station }
+      if arrival_station != nil
+        route = Route.new(route_number, departure_station, arrival_station)
+        @routes << route
+        puts "The route has been created."
+      else
+        puts "There is no such station."
+      end
+    else
+      puts "There is no such station."
+    end
   end
 
   def create_car
@@ -116,95 +126,127 @@ private
     elsif type == "cargo"
       car = CargoCar.new(car_number)
       @cars << car
+    else
+      puts "Enter passenger or cargo type."
     end
     puts "The car has been created."
   end
 
   def attach_route
-    train_number
-    route_number
-    @train.route(@route)
-    puts "Route #{@route.number} has been attached to train #{@train.number}."
+    train = find_train
+    route = find_route
+    if train != nil && route != nil
+      train.route(route)
+      puts "Route #{route.number} has been attached to train #{train.number}."
+    else
+      puts "There is no such train or route."
+    end
   end
 
   def add_car
-    train_number
-    car_number
-    if @train.type == @car.type
-      @train.add_car(@car)
-      puts "Car #{@car.number} has been added to train #{@train.number}."
+    train = find_train
+    car = find_car
+    if train != nil && car != nil
+      if train.type == car.type
+        train.add_car(car)
+        puts "Car #{car.number} has been added to train #{train.number}."
+      else
+        puts "The car and the train must have the same type."
+      end
     else
-      puts "The car and the train must have the same type."
+      puts "There is no such train or car."
     end
   end
 
   def delete_car
-    train_number
-    car_number
-    if @train.cars.include?(@car)
-      @train.delete_car(@car)
-      puts "Car #{@car.number} has been deleted from #{@train.number}."
+    train = find_train
+    car = find_car
+    if train != nil && car != nil
+      if train.cars.include?(car)
+        train.delete_car(car)
+        puts "Car #{car.number} has been deleted from #{train.number}."
+      else
+        puts "Train #{train.number} doesn't have car #{car.number}"
+      end
     else
-      puts "Train #{@train.number} doesn't have car #{@car.number}"
+      puts "There is no such train or car."
     end
   end
 
   def move_forward
-    train_number
-    if @train.current_station != @route.last_station
-      @train.forward
-    puts "The train has been moved to #{@train.current_station.name}."
+    train = find_train
+    route = find_route
+    if train != nil
+      if train.current_station != route.last_station
+        train.forward
+        puts "The train has been moved to #{train.current_station.name}."
+      else
+        puts "The train is on the last station."
+      end
     else
-      puts "The train is on the last station."
+      puts "There is no such train."
     end
   end
 
   def move_backward
-    train_number
-    if @train.current_station != @route.first_station
-      @train.backward
-      puts "The train has been moved to #{@train.current_station.name}."
+    train = find_train
+    route = find_route
+    if train != nil
+      if train.current_station != route.first_station
+        train.backward
+        puts "The train has been moved to #{train.current_station.name}."
+      else
+        puts "The train is on the first station."
+      end
     else
-      puts "The train is on the first station."
+      puts "There is no such train."
     end
   end
 
   def view_stations
-    route_number
-    @route.stations.each { |station| puts station.name }
+    route = find_route
+    if route != nil
+      route.stations.each { |station| puts station.name }
+    else
+      puts "There is no such route."
+    end
   end
 
   def view_trains
-    station_name
-    @station.trains.each { |train| puts "train #{train.number}" }
+    station = find_station
+    if station != nil
+      station.trains.each { |train| puts "train #{train.number}" }
+    else
+      puts "There is no such station."
+    end
   end
 
   def exit
     puts "Good bye!"
   end
 
-  def train_number
+  def find_train
     puts "Enter train number:"
     train_number = gets.chomp
-    @train = @trains.find { |train| train.number == train_number }
+    @trains.find { |train| train.number == train_number }
   end
 
-  def car_number
+  def find_car
     puts "Enter car number:"
     car_number = gets.chomp
-    @car = @cars.find { |car| car.number == car_number }
+    @cars.find { |car| car.number == car_number }
   end
 
-  def route_number
+  def find_route
     puts "Enter route number:"
     route_number = gets.chomp
-    @route = @routes.find { |route| route.number == route_number }
+    @routes.find { |route| route.number == route_number }
   end
 
-  def station_name
+  def find_station
     puts "Enter station's name:"
     station_name = gets.chomp
-    @station = @stations.find { |station| station.name == station_name }
+    @stations.find { |station| station.name == station_name }
   end
 end
 

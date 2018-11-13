@@ -3,11 +3,12 @@ require_relative 'train'
 class PassengerTrain < Train
 
   def initialize(number)
-    super
-    @type = "passenger"
+    super(number, "passenger")
   end
 
   def add_car(car)
-    @cars << car if @speed == 0 && car.type == "passenger"
+    if car.type == "passenger"
+      super
+    end
   end
 end

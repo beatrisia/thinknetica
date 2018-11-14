@@ -7,8 +7,6 @@ class PassengerTrain < Train
   end
 
   def add_car(car)
-    if car.type == "passenger"
-      super
-    end
+    super if car.type == "passenger"
   end
 end

@@ -6,5 +6,4 @@ class Car
     @number = number
     @type = type
   end
-
 end

@@ -94,8 +94,6 @@ private
   end
 
   def create_route
-    puts "Enter route number:"
-    route_number = gets.chomp
     puts "Enter departure station:"
     dep_station = gets.chomp
     departure_station = @stations.find { |station| station.name == dep_station }
@@ -103,7 +101,15 @@ private
       puts "Enter arrival station:"
       ar_station = gets.chomp
       arrival_station = @stations.find { |station| station.name == ar_station }
-      add_route
+      if arrival_station
+        puts "Enter route number:"
+        route_number = gets.chomp
+        route = Route.new(route_number, departure_station, arrival_station)
+        @routes << route
+        puts "The route has been created."
+      else
+        puts "There is no such station."
+      end
     else
       puts "There is no such station."
     end
@@ -141,7 +147,12 @@ private
     train = find_train
     car = find_car
     if train && car
-      add_car_condition
+      if train.type == car.type
+        train.add_car(car)
+        puts "Car #{car.number} has been added to train #{train.number}."
+      else
+        puts "The car and the train must have the same type."
+      end
     else
       puts "There is no such train or car."
     end
@@ -151,7 +162,12 @@ private
     train = find_train
     car = find_car
     if train && car
-      delete_car_condition
+      if train.cars.include?(car)
+        train.delete_car(car)
+        puts "Car #{car.number} has been deleted from #{train.number}."
+      else
+        puts "Train #{train.number} doesn't have car #{car.number}"
+      end
     else
       puts "There is no such train or car."
     end
@@ -160,7 +176,7 @@ private
   def move_forward
     train = find_train
     route = find_route
-    if train
+    if train && route
       if train.current_station != route.last_station
         train.forward
         puts "The train has been moved to #{train.current_station.name}."
@@ -168,14 +184,14 @@ private
         puts "The train is on the last station."
       end
     else
-      puts "There is no such train."
+      puts "There is no such train or route."
     end
   end
 
   def move_backward
     train = find_train
     route = find_route
-    if train
+    if train && route
       if train.current_station != route.first_station
         train.backward
         puts "The train has been moved to #{train.current_station.name}."
@@ -183,7 +199,7 @@ private
         puts "The train is on the first station."
       end
     else
-      puts "There is no such train."
+      puts "There is no such train or route."
     end
   end
 
@@ -232,36 +248,7 @@ private
     station_name = gets.chomp
     @stations.find { |station| station.name == station_name }
   end
-
-  def add_route
-    if arrival_station
-      route = Route.new(route_number, departure_station, arrival_station)
-      @routes << route
-      puts "The route has been created."
-    else
-      puts "There is no such station."
-    end
-  end
-
-  def add_car_condition
-    if train.type == car.type
-      train.add_car(car)
-      puts "Car #{car.number} has been added to train #{train.number}."
-    else
-      puts "The car and the train must have the same type."
-    end
-  end
-
-  def delete_car_condition
-    if train.cars.include?(car)
-      train.delete_car(car)
-      puts "Car #{car.number} has been deleted from #{train.number}."
-    else
-      puts "Train #{train.number} doesn't have car #{car.number}"
-    end
-  end
 end
-
 main = Main.new
 main.run
 

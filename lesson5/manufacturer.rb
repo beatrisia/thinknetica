@@ -1,5 +1,7 @@
-# Создать модуль, который позволит указывать название компании-производителя и получать его. Подключить модуль к классам Вагон и Поезд
-
 module Manufacturer
-  attr_writer :manufacturer
+  attr_reader :manufacturer
+
+  def set_manufacturer(manufacturer)
+    @manufacturer = manufacturer
+  end
 end

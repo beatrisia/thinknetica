@@ -5,13 +5,13 @@ class Train
   include Manufacturer
   include InstanceCounter
 
-  @trains = []
+  @trains = {}
 
-  class << self;
-    attr_reader :trains;
+  class << self
+    attr_reader :trains
 
     def find(number)
-      @trains.find { |train| train.number == number }
+      @trains.values_at(number)
     end
   end
 
@@ -22,8 +22,8 @@ class Train
     @type = type
     @cars = []
     @speed = 0
-    self.class.trains << self
-    self.register_instance
+    self.class.trains[number] = self
+    register_instance
   end
 
   def increase_speed(speed)

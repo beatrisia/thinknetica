@@ -8,7 +8,7 @@ class Route
   def initialize(number, departure_station, arrival_station)
     @stations = [departure_station, arrival_station]
     @number = number
-    self.register_instance
+    register_instance
   end
 
   def add(station)

@@ -4,10 +4,8 @@ module InstanceCounter
     base.send :include, InstanceMethods
   end
 
-  @instances = 0
-
   module ClassMethods
-    attr_reader :instances
+    attr_accessor :instances
   end
 
   module InstanceMethods

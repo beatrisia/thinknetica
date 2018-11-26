@@ -6,12 +6,13 @@ class Train
   include InstanceCounter
 
   @trains = {}
+  @instances = 0
 
   class << self
     attr_reader :trains
 
     def find(number)
-      @trains.values_at(number)
+      @trains[number]
     end
   end
 

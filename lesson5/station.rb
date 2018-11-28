@@ -4,7 +4,6 @@ class Station
   include InstanceCounter
 
   @all = []
-  @instances = 0
 
   class << self; attr_reader :all; end
 

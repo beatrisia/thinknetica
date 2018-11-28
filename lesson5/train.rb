@@ -6,7 +6,6 @@ class Train
   include InstanceCounter
 
   @trains = {}
-  @instances = 0
 
   class << self
     attr_reader :trains
